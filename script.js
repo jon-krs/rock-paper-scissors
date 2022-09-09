@@ -40,52 +40,56 @@ function getPlayerChoice() {
 // Plays round of rock, paper, scissors. 
 // Returns a number between 0 to 2 to signal who won.
 function playRound(playerChoice, computerChoice) {
-    let userWins = `You win a round! ${playerChoice} beats ${computerChoice}.`;
-    let computerWins = `You lose a round! ${computerChoice} beats ${playerChoice}.`;
-    let tie = `It's a tie this round! ${computerChoice} matches ${playerChoice}.`;
+    const userWins = `You win a round! ${playerChoice} beats ${computerChoice}.`;
+    const computerWins = `You lose a round! ${computerChoice} beats ${playerChoice}.`;
+    const tie = `It's a tie this round! ${computerChoice} matches ${playerChoice}.`;
+    let msg;
+    let returnValue;
 
     if (computerChoice === 'Rock') {
         if (playerChoice === 'Paper') {
-            console.log(userWins);
-            return 0;
+            msg = userWins;
+            returnValue = 0;
         }
         else if (playerChoice === 'Scissors') {
-            console.log(computerWins);
-            return 1;
+            msg = computerWins;
+            returnValue = 1;
         }
         else {
-            console.log(tie);
-            return 2;
+            msg = tie;
+            returnValue = 2;
         }
     }
     else if (computerChoice === 'Paper') {
         if (playerChoice === 'Paper') {
-            console.log(tie);
-            return 2;
+            msg = tie;
+            returnValue = 2;
         }
         else if (playerChoice === 'Scissors') {
-            console.log(userWins);
-            return 0;
+            msg = userWins;
+            returnValue = 0;
         }
         else {
-            console.log(computerWins);
-            return 1;
+            msg = computerWins;
+            returnValue = 1;
         }
     }
     else {
         if (playerChoice === 'Paper') {
-            console.log(computerWins);
-            return 1;
+            msg = computerWins;
+            returnValue = 1;
         }
         else if (playerChoice === 'Scissors') {
-            console.log(tie);
-            return 2;
+            msg = tie;
+            returnValue = 2;
         }
         else {
-            console.log(userWins);
-            return 0;
+            msg = userWins;
+            returnValue = 0;
         }
     }
+    document.getElementById('output').innerHTML = msg;
+    return returnValue;
 }
 
 // Plays 5 rounds of rock, paper, scissors. 
@@ -116,4 +120,12 @@ function game() {
     }
 }
 
-game();
+// game();
+
+const buttonEvent = document.querySelectorAll('button');
+buttonEvent.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.getAttribute('id').charAt(0).toUpperCase() + button.getAttribute('id').slice(1), getComputerChoice());
+        console.log(button.getAttribute('id'));
+    });
+});
