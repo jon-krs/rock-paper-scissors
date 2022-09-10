@@ -19,113 +19,118 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-// Prompts player to choose rock, paper, or scissors for game.
-// Will continue to prompt if anything other than case-insensitive 'rock',
-// 'paper', or 'scissors' is typed.
-function getPlayerChoice() {
-    let playerChoice = prompt('Choose your weapon!');
-    playerChoice = playerChoice.toLowerCase();
-
-    if (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'scissors') {
-        while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'scissors') {
-            playerChoice = prompt('Invalid selection. Please choose either Rock, Paper, or Scissors.')
-            playerChoice = playerChoice.toLowerCase();
-        }
-    }
-
-    playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
-    return playerChoice;
-}
-
-// Plays round of rock, paper, scissors. 
-// Returns a number between 0 to 2 to signal who won.
+// Calls updateScore() with a reference number between 0 to 2 to signal round winner.
+// Outputs round result message.
 function playRound(playerChoice, computerChoice) {
     const userWins = `You win a round! ${playerChoice} beats ${computerChoice}.`;
     const computerWins = `You lose a round! ${computerChoice} beats ${playerChoice}.`;
     const tie = `It's a tie this round! ${computerChoice} matches ${playerChoice}.`;
     let msg;
-    let returnValue;
+    let refValue;
 
     if (computerChoice === 'Rock') {
         if (playerChoice === 'Paper') {
             msg = userWins;
-            returnValue = 0;
+            refValue = 0;
         }
         else if (playerChoice === 'Scissors') {
             msg = computerWins;
-            returnValue = 1;
+            refValue = 1;
         }
         else {
             msg = tie;
-            returnValue = 2;
+            refValue = 2;
         }
     }
     else if (computerChoice === 'Paper') {
         if (playerChoice === 'Paper') {
             msg = tie;
-            returnValue = 2;
+            refValue = 2;
         }
         else if (playerChoice === 'Scissors') {
             msg = userWins;
-            returnValue = 0;
+            refValue = 0;
         }
         else {
             msg = computerWins;
-            returnValue = 1;
+            refValue = 1;
         }
     }
     else {
         if (playerChoice === 'Paper') {
             msg = computerWins;
-            returnValue = 1;
+            refValue = 1;
         }
         else if (playerChoice === 'Scissors') {
             msg = tie;
-            returnValue = 2;
+            refValue = 2;
         }
         else {
             msg = userWins;
-            returnValue = 0;
+            refValue = 0;
         }
     }
     document.getElementById('output').innerHTML = msg;
-    return returnValue;
+    updateScore(refValue);
 }
+
+// Updates after each round, calls checkScore() to determine if game has winner.
+function updateScore(refValue) {
+    if (refValue === 0) {
+        document.querySelector('#player-score').innerHTML++;
+    }
+    else if (refValue === 1) {
+        document.querySelector('#computer-score').innerHTML++;
+    }
+    checkScore(document.querySelector('#player-score').innerHTML, document.querySelector('#computer-score').innerHTML);
+}
+
+// Checks score after every round to determine if a player has reached 5 points.
+// Disables button selection and outputs win message if so.
+function checkScore(playerScore, computerScore) {
+    if (playerScore === '5' || computerScore === '5') {
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            button.disabled = true;
+        })
+    }
+}
+
+// Event listeners to handle player selection and call playRound.
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.getAttribute('id').charAt(0).toUpperCase() + button.getAttribute('id').slice(1), getComputerChoice());
+    });
+});
+
 
 // Plays 5 rounds of rock, paper, scissors. 
 // Returns winner, loser, or tie.
-function game() {
-    let userScore = 0;
-    let computerScore = 0;
-    let roundResult;
+// function game() {
+//     let userScore = 0;
+//     let computerScore = 0;
+//     let roundResult;
 
-    for (let i = 0; i < 5; i++) {
-        roundResult = playRound(getPlayerChoice(), getComputerChoice());
-        if (roundResult === 0) {
-            userScore++;
-        }
-        else if (roundResult === 1) {
-            computerScore++;
-        }
-    }
+//     for (let i = 0; i < 5; i++) {
+//         roundResult = playRound(getPlayerChoice(), getComputerChoice());
+//         if (roundResult === 0) {
+//             userScore++;
+//         }
+//         else if (roundResult === 1) {
+//             computerScore++;
+//         }
+//     }
 
-    if (userScore > computerScore) {
-        console.log(`You win the game ${userScore} to ${computerScore}!`);
-    }
-    else if (computerScore > userScore) {
-        console.log(`You lose the game ${computerScore} to ${userScore}!`);
-    }
-    else {
-        console.log(`The game was tied ${computerScore} to ${userScore}!`);
-    }
-}
+//     if (userScore > computerScore) {
+//         console.log(`You win the game ${userScore} to ${computerScore}!`);
+//     }
+//     else if (computerScore > userScore) {
+//         console.log(`You lose the game ${computerScore} to ${userScore}!`);
+//     }
+//     else {
+//         console.log(`The game was tied ${computerScore} to ${userScore}!`);
+//     }
+// }
 
 // game();
-
-const buttonEvent = document.querySelectorAll('button');
-buttonEvent.forEach((button) => {
-    button.addEventListener('click', () => {
-        playRound(button.getAttribute('id').charAt(0).toUpperCase() + button.getAttribute('id').slice(1), getComputerChoice());
-        console.log(button.getAttribute('id'));
-    });
-});
