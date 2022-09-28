@@ -93,6 +93,15 @@ function checkScore(playerScore, computerScore) {
         buttons.forEach((button) => {
             button.disabled = true;
         })
+        document.querySelector('body').className = 'end';
+        document.querySelector('#game-end').style.display = 'block';
+        document.querySelector('.content').style.opacity = '0';
+        if (playerScore === '5') {
+            document.querySelector('#game-end').innerHTML = 'You\'ve WON! Click here to play again.';
+        }
+        else {
+            document.querySelector('#game-end').innerHTML = 'You\'ve LOST! Click here to play again.';
+        }
     }
 }
 

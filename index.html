@@ -8,38 +8,42 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    <div class="content">
-        <div class="top">
-            <h1>Rock Paper Scissors</h1>
-        </div>
-    
-        <div id="button-container">
-            <div class="item">
-                <button id="rock"></button>
-                <span class="text-descr">Rock</span>
+    <div class="body">
+        <div class="content">
+            <div class="top">
+                <h1>Rock Paper Scissors</h1>
             </div>
-            <div class="item">
-                <button id="paper"></button>
-                <span class="text-descr">Paper</span>
+        
+            <div id="button-container">
+                <div class="item">
+                    <button id="rock"><img src="./images/cave-painting.png"></button>
+                    <span class="text-descr">Rock</span>
+                </div>
+                <div class="item">
+                    <button id="paper"><img src="./images/document.png"></button>
+                    <span class="text-descr">Paper</span>
+                </div>
+                <div class="item">
+                    <button id="scissors"><img src="./images/scissors-opened-tool-shape.png"></button>
+                    <span class="text-descr">Scissors</span>
+                </div>
             </div>
-            <div class="item">
-                <button id="scissors"></button>
-                <span class="text-descr">Scissors</span>
-            </div>
-        </div>
-    
-        <div id="output"></div>
-        <div id="game-score">
-            <div class="score-item">
-                <div class="score">Player Score</div>
-                <span id="player-score"></span>
-            </div>
-            <div class="score-item">
-                <div class="score">Computer Score</div>
-                <span id="computer-score"></span>
+        
+            <div id="output"></div>
+            <div id="game-score">
+                <div class="score-item">
+                    <div class="score">Player Score</div>
+                    <span id="player-score">0</span>
+                </div>
+                <div class="score-item">
+                    <div class="score">Computer Score</div>
+                    <span id="computer-score">0</span>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="game-end" onClick="window.location.reload();"></div>
 
     <script src="./script.js"></script>
 </body>
